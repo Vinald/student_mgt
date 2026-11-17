@@ -3,6 +3,7 @@ package online.vinald.student_mgt.subject;
 import jakarta.transaction.Transactional;
 import online.vinald.student_mgt.exception.ConflictException;
 import online.vinald.student_mgt.exception.ResourceNotFoundException;
+import online.vinald.student_mgt.teacher.Teacher;
 import online.vinald.student_mgt.teacher.TeacherService;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +43,7 @@ public class SubjectService {
             throw new ConflictException("Subject code " + request.code() + " already exists");
         }
         Subject subject = SubjectMapper.toEntity(request);
+        subject.setTeacher(resolveTeacher(request.teacherId()));
 		subjectRepository.save(subject);
         return SubjectMapper.toDto(subject);
     }
@@ -52,9 +54,14 @@ public class SubjectService {
             throw new ConflictException("Subject code " + request.code() + " already exists");
         }
         SubjectMapper.updateEntity(subject, request);
+        subject.setTeacher(resolveTeacher(request.teacherId()));
         subject.setUpdatedAt(LocalDate.now());
 		subjectRepository.save(subject);
         return SubjectMapper.toDto(subject);
+    }
+
+    private Teacher resolveTeacher(Long teacherId) {
+        return teacherId == null ? null : teacherService.findEntity(teacherId);
     }
 
     public void delete(Long id) {

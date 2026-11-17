@@ -8,6 +8,7 @@ public class SubjectMapper {
 				subject.getName(),
 				subject.getDescription(),
 				subject.getCredits(),
+				subject.getTeacher() != null ? subject.getTeacher().getId() : null,
 				subject.getCreatedAt(),
 				subject.getUpdatedAt()
 		);
@@ -19,7 +20,6 @@ public class SubjectMapper {
 		return subject;
 	}
 
-	// teacherId is not resolved here - the service must look up the Teacher and set it
 	public static void updateEntity(Subject subject, SubjectRequestDto request) {
 		subject.setCode(request.code());
 		subject.setName(request.name());

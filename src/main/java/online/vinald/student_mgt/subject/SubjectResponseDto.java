@@ -8,6 +8,7 @@ public record SubjectResponseDto(
 		String name,
 		String description,
 		Integer credits,
+		Long teacherId,
 		LocalDate createdAt,
 		LocalDate updatedAt
 ) {
