@@ -1,11 +1,8 @@
-package online.vinald.student_mgt.service;
+package online.vinald.student_mgt.student;
 
-import online.vinald.student_mgt.dto.StudentRequest;
 import online.vinald.student_mgt.exception.DuplicateEmailException;
-import online.vinald.student_mgt.model.Student;
-import online.vinald.student_mgt.repository.StudentRepository;
+import online.vinald.student_mgt.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
-import online.vinald.student_mgt.exception.StudentNotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -22,16 +19,16 @@ public class StudentService {
 		return repository.findAll();
 	}
 
-	public Student getById(Integer id) {
+	public Student getById(Long id) {
 		return repository.findById(id)
-				.orElseThrow(() -> new StudentNotFoundException(id));
+				.orElseThrow(() -> new ResourceNotFoundException("Student", id));
 	}
 
 	public List<Student> searchByName(String name) {
 		return repository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(name, name);
 	}
 
-	public Student create(StudentRequest request) {
+	public Student create(StudentRequestDto request) {
 		if (repository.existsByEmail(request.email())){
 			throw new DuplicateEmailException(request.email());
 		}
@@ -44,7 +41,7 @@ public class StudentService {
 		return repository.save(student);
 	}
 
-	public Student update(Integer id, StudentRequest request) {
+	public Student update(Long id, StudentRequestDto request) {
 		Student student = getById(id);
 		if (!student.getEmail().equals(request.email()) && repository.existsByEmail(request.email())) {
 			throw new DuplicateEmailException(request.email());
@@ -58,7 +55,7 @@ public class StudentService {
 		return repository.save(student);
 	}
 
-	public void delete(Integer id){
+	public void delete(Long id){
 		Student student = getById(id);
 		repository.delete(student);
 	}

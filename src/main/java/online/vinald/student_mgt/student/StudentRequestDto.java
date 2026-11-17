@@ -1,10 +1,10 @@
-package online.vinald.student_mgt.dto;
+package online.vinald.student_mgt.student;
 
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
-public record StudentRequest(
+public record StudentRequestDto(
 		@NotBlank(message = "First name is required") String firstName,
 		@NotBlank(message = "Last name is required") String lastName,
 		@NotBlank(message = "Email is required")
