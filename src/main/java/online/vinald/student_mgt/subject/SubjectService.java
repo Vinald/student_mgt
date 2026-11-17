@@ -1,12 +1,10 @@
 package online.vinald.student_mgt.subject;
 
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import online.vinald.student_mgt.exception.ConflictException;
 import online.vinald.student_mgt.exception.ResourceNotFoundException;
 import online.vinald.student_mgt.teacher.TeacherService;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -38,7 +36,7 @@ public class SubjectService {
                 .map(SubjectMapper::toDto).toList();
     }
 
-    public SubjectResponseDto create(@Valid @RequestBody SubjectRequestDto request) {
+    public SubjectResponseDto create(SubjectRequestDto request) {
         if (subjectRepository.existsByCode(request.code())) {
             throw new ConflictException("Subject code " + request.code() + " already exists");
         }
@@ -47,13 +45,12 @@ public class SubjectService {
         return SubjectMapper.toDto(subject);
     }
 
-    public SubjectResponseDto update(Long id, @Valid @RequestBody SubjectRequestDto request) {
+    public SubjectResponseDto update(Long id, SubjectRequestDto request) {
         Subject subject = findEntity(id);
         if (!subject.getCode().equals(request.code()) && subjectRepository.existsByCode(request.code())) {
             throw new ConflictException("Subject code " + request.code() + " already exists");
         }
-        subject.setCode(request.code());
-        subject.setName(request.name());
+        SubjectMapper.updateEntity(subject, request);
 		subjectRepository.save(subject);
         return SubjectMapper.toDto(subject);
     }

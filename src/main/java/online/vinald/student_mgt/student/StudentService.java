@@ -3,11 +3,13 @@ package online.vinald.student_mgt.student;
 import online.vinald.student_mgt.exception.DuplicateEmailException;
 import online.vinald.student_mgt.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@Transactional
 public class StudentService {
 	private final StudentRepository repository;
 

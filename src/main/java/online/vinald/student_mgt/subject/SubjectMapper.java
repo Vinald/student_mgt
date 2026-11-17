@@ -15,10 +15,15 @@ public class SubjectMapper {
 
 	public static Subject toEntity(SubjectRequestDto request) {
 		Subject subject = new Subject();
+		updateEntity(subject, request);
+		return subject;
+	}
+
+	// teacherId is not resolved here - the service must look up the Teacher and set it
+	public static void updateEntity(Subject subject, SubjectRequestDto request) {
 		subject.setCode(request.code());
 		subject.setName(request.name());
 		subject.setDescription(request.description());
 		subject.setCredits(request.credits());
-		return subject;
 	}
 }
