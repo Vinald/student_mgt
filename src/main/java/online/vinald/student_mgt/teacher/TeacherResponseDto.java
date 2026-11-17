@@ -9,5 +9,6 @@ public record TeacherResponseDto(
 		String email,
 		String phone,
 		String specialization,
-		LocalDate createdAt
+		LocalDate createdAt,
+		LocalDate updatedAt
 ) {}

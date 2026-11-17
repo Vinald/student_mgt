@@ -6,6 +6,7 @@ import online.vinald.student_mgt.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -27,9 +28,9 @@ public class TeacherService {
         if (teacherRepository.existsByEmail(request.email())) {
             throw new ConflictException("A teacher with email " + request.email() + " already exists");
         }
-        Teacher teacher = new Teacher();
-        TeacherMapper.updateEntity(teacher, request);
-        return TeacherMapper.toDto(teacherRepository.save(teacher));
+        Teacher teacher = TeacherMapper.toEntity(request);
+		teacherRepository.save(teacher);
+        return TeacherMapper.toDto(teacher);
     }
 
     public TeacherResponseDto update(Long id, TeacherRequestDto request) {
@@ -39,7 +40,9 @@ public class TeacherService {
             throw new ConflictException("A teacher with email " + request.email() + " already exists");
         }
         TeacherMapper.updateEntity(teacher, request);
-        return TeacherMapper.toDto(teacherRepository.save(teacher));
+        teacher.setUpdatedAt(LocalDate.now());
+		teacherRepository.save(teacher);
+        return TeacherMapper.toDto(teacher);
     }
 
     public void delete(Long id) {

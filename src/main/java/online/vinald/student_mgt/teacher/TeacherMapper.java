@@ -10,8 +10,15 @@ public class TeacherMapper {
 				teacher.getEmail(),
 				teacher.getPhone(),
 				teacher.getSpecialization(),
-				teacher.getCreatedAt()
+				teacher.getCreatedAt(),
+				teacher.getUpdatedAt()
 		);
+	}
+
+	public static Teacher toEntity(TeacherRequestDto request) {
+		Teacher teacher = new Teacher();
+		updateEntity(teacher, request);
+		return teacher;
 	}
 
 	public static void updateEntity(Teacher teacher, TeacherRequestDto request) {
