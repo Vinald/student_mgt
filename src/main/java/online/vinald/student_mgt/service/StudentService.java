@@ -22,7 +22,7 @@ public class StudentService {
 		return repository.findAll();
 	}
 
-	public Student getById(Integer id) {
+	public Student getById(Long id) {
 		return repository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Student", id));
 	}
@@ -44,7 +44,7 @@ public class StudentService {
 		return repository.save(student);
 	}
 
-	public Student update(Integer id, StudentRequest request) {
+	public Student update(Long id, StudentRequest request) {
 		Student student = getById(id);
 		if (!student.getEmail().equals(request.email()) && repository.existsByEmail(request.email())) {
 			throw new DuplicateEmailException(request.email());
@@ -58,7 +58,7 @@ public class StudentService {
 		return repository.save(student);
 	}
 
-	public void delete(Integer id){
+	public void delete(Long id){
 		Student student = getById(id);
 		repository.delete(student);
 	}
