@@ -26,9 +26,9 @@ public class Student {
 	private LocalDate dateOfBirth;
 	private String course;
 	@Column(updatable = false, nullable = false)
-	private LocalDate createdAt;
-	private LocalDate updatedAt;
-	private UUID uuid;
+	private LocalDate createdAt = LocalDate.now();
+	private LocalDate updatedAt = LocalDate.now();
+	private UUID uuid = UUID.randomUUID();
 
 	public  Student(String firstName, String lastName, String email, LocalDate dateOfBirth, String course) {
 		this.firstName = firstName;
