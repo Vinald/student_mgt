@@ -2,7 +2,7 @@ package online.vinald.student_mgt.teacher;
 
 public class TeacherMapper {
 
-	public static TeacherResponseDto toDto(Teacher teacher) {
+	public static TeacherResponseDto toResponseDto(Teacher teacher) {
 		return new TeacherResponseDto(
 				teacher.getId(),
 				teacher.getFirstName(),
@@ -14,11 +14,16 @@ public class TeacherMapper {
 		);
 	}
 
-	public static void updateEntity(Teacher teacher, TeacherRequestDto request) {
+	public static Teacher toTeacher (TeacherRequestDto request) {
+		if (request == null) {
+			throw new NullPointerException("TeacherRequestDto cannot be null");
+		}
+		Teacher teacher = new Teacher();
 		teacher.setFirstName(request.firstName());
 		teacher.setLastName(request.lastName());
 		teacher.setEmail(request.email());
 		teacher.setPhone(request.phone());
 		teacher.setSpecialization(request.specialization());
+		return teacher;
 	}
 }

@@ -16,20 +16,20 @@ public class TeacherService {
     private final TeacherRepository teacherRepository;
 
     public List<TeacherResponseDto> getAll() {
-        return teacherRepository.findAll().stream().map(TeacherMapper::toDto).toList();
+        return teacherRepository.findAll().stream().map(TeacherMapper::toResponseDto).toList();
     }
 
     public TeacherResponseDto getById(Long id) {
-        return TeacherMapper.toDto(findEntity(id));
+        return TeacherMapper.toResponseDto(findEntity(id));
     }
 
     public TeacherResponseDto create(TeacherRequestDto request) {
         if (teacherRepository.existsByEmail(request.email())) {
             throw new ConflictException("A teacher with email " + request.email() + " already exists");
         }
-        Teacher teacher = new Teacher();
-        TeacherMapper.updateEntity(teacher, request);
-        return TeacherMapper.toDto(teacherRepository.save(teacher));
+        Teacher teacher = TeacherMapper.toTeacher(request);
+		teacherRepository.save(teacher);
+        return TeacherMapper.toResponseDto(teacher);
     }
 
     public TeacherResponseDto update(Long id, TeacherRequestDto request) {
@@ -38,8 +38,9 @@ public class TeacherService {
                 && teacherRepository.existsByEmail(request.email())) {
             throw new ConflictException("A teacher with email " + request.email() + " already exists");
         }
-        TeacherMapper.updateEntity(teacher, request);
-        return TeacherMapper.toDto(teacherRepository.save(teacher));
+        TeacherMapper.toTeacher(request);
+		teacherRepository.save(teacher);
+        return TeacherMapper.toResponseDto(teacher);
     }
 
     public void delete(Long id) {
