@@ -32,12 +32,7 @@ public class StudentService {
 		if (repository.existsByEmail(request.email())){
 			throw new DuplicateEmailException(request.email());
 		}
-		Student student = new Student(
-				request.firstName(),
-				request.lastName(),
-				request.email(),
-				request.dateOfBirth(),
-				request.course());
+		Student student = StudentMapper.toEntity(request);
 		return repository.save(student);
 	}
 
@@ -46,11 +41,7 @@ public class StudentService {
 		if (!student.getEmail().equals(request.email()) && repository.existsByEmail(request.email())) {
 			throw new DuplicateEmailException(request.email());
 		}
-		student.setFirstName(request.firstName());
-		student.setLastName(request.lastName());
-		student.setEmail(request.email());
-		student.setDateOfBirth(request.dateOfBirth());
-		student.setCourse(request.course());
+		StudentMapper.updateEntity(student, request);
 		student.setUpdatedAt(LocalDate.now());
 		return repository.save(student);
 	}
