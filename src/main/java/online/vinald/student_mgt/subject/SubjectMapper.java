@@ -1,12 +1,7 @@
 package online.vinald.student_mgt.subject;
 
-import jakarta.validation.constraints.Null;
-
 public class SubjectMapper {
-	public static SubjectResponseDto toSubjectResponseDto(Subject subject) {
-		if(subject == null) {
-			throw new NullPointerException("Subject cannot be null");
-		}
+	public static SubjectResponseDto toDto(Subject subject) {
 		return new SubjectResponseDto(
 				subject.getId(),
 				subject.getCode(),
@@ -18,16 +13,12 @@ public class SubjectMapper {
 		);
 	}
 
-	public static Subject toSubject(SubjectResponseDto subjectResponseDto) {
-		if(subjectResponseDto == null) {
-			throw new NullPointerException("SubjectResponseDto cannot be null");
-		}
+	public static Subject toEntity(SubjectRequestDto request) {
 		Subject subject = new Subject();
-		subject.setCode(subjectResponseDto.code());
-		subject.setName(subjectResponseDto.name());
-		subject.setDescription(subjectResponseDto.description());
-		subject.setCredits(subjectResponseDto.credits());
-		subject.setUpdatedAt(subjectResponseDto.updatedAt());
+		subject.setCode(request.code());
+		subject.setName(request.name());
+		subject.setDescription(request.description());
+		subject.setCredits(request.credits());
 		return subject;
 	}
 }

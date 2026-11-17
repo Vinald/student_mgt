@@ -31,5 +31,6 @@ public class Subject {
 	public Subject(String code, String name, String description) {
 		this.code = code;
 		this.name = name;
+		this.description = description;
 	}
 }
