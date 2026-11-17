@@ -1,6 +1,5 @@
-package online.vinald.student_mgt.repository;
+package online.vinald.student_mgt.student;
 
-import online.vinald.student_mgt.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

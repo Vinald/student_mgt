@@ -1,4 +1,4 @@
-package online.vinald.student_mgt.model;
+package online.vinald.student_mgt.student;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

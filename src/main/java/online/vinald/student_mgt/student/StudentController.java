@@ -1,9 +1,6 @@
-package online.vinald.student_mgt.controller;
+package online.vinald.student_mgt.student;
 
 import jakarta.validation.Valid;
-import online.vinald.student_mgt.dto.StudentRequest;
-import online.vinald.student_mgt.model.Student;
-import online.vinald.student_mgt.service.StudentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,12 +31,12 @@ public class StudentController {
 	}
 
 	@PostMapping
-	public Student createStudent(@Valid @RequestBody StudentRequest request) {
+	public Student createStudent(@Valid @RequestBody StudentRequestDto request) {
 		return service.create(request);
 	}
 
 	@PutMapping("/{id}")
-	public Student updateStudent(@PathVariable Long id, @Valid @RequestBody StudentRequest request) {
+	public Student updateStudent(@PathVariable Long id, @Valid @RequestBody StudentRequestDto request) {
 		return service.update(id, request);
 	}
 

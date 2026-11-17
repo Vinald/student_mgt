@@ -1,10 +1,7 @@
-package online.vinald.student_mgt.service;
+package online.vinald.student_mgt.student;
 
-import online.vinald.student_mgt.dto.StudentRequest;
 import online.vinald.student_mgt.exception.DuplicateEmailException;
 import online.vinald.student_mgt.exception.ResourceNotFoundException;
-import online.vinald.student_mgt.model.Student;
-import online.vinald.student_mgt.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -31,7 +28,7 @@ public class StudentService {
 		return repository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(name, name);
 	}
 
-	public Student create(StudentRequest request) {
+	public Student create(StudentRequestDto request) {
 		if (repository.existsByEmail(request.email())){
 			throw new DuplicateEmailException(request.email());
 		}
@@ -44,7 +41,7 @@ public class StudentService {
 		return repository.save(student);
 	}
 
-	public Student update(Long id, StudentRequest request) {
+	public Student update(Long id, StudentRequestDto request) {
 		Student student = getById(id);
 		if (!student.getEmail().equals(request.email()) && repository.existsByEmail(request.email())) {
 			throw new DuplicateEmailException(request.email());
