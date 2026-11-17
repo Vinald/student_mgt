@@ -2,10 +2,10 @@ package online.vinald.student_mgt.service;
 
 import online.vinald.student_mgt.dto.StudentRequest;
 import online.vinald.student_mgt.exception.DuplicateEmailException;
+import online.vinald.student_mgt.exception.ResourceNotFoundException;
 import online.vinald.student_mgt.model.Student;
 import online.vinald.student_mgt.repository.StudentRepository;
 import org.springframework.stereotype.Service;
-import online.vinald.student_mgt.exception.StudentNotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,7 +24,7 @@ public class StudentService {
 
 	public Student getById(Integer id) {
 		return repository.findById(id)
-				.orElseThrow(() -> new StudentNotFoundException(id));
+				.orElseThrow(() -> new ResourceNotFoundException("Student", id));
 	}
 
 	public List<Student> searchByName(String name) {
