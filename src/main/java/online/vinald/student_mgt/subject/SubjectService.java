@@ -6,6 +6,7 @@ import online.vinald.student_mgt.exception.ResourceNotFoundException;
 import online.vinald.student_mgt.teacher.TeacherService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -51,6 +52,7 @@ public class SubjectService {
             throw new ConflictException("Subject code " + request.code() + " already exists");
         }
         SubjectMapper.updateEntity(subject, request);
+        subject.setUpdatedAt(LocalDate.now());
 		subjectRepository.save(subject);
         return SubjectMapper.toDto(subject);
     }

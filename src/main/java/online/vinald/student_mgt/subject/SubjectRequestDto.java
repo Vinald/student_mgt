@@ -10,7 +10,6 @@ public record SubjectRequestDto(
 		@NotBlank(message = "Name is required") String name,
 		String description,
 		@Positive(message = "Credits must be a positive number") Integer credits,
-		LocalDate updatedAt,
 		Long teacherId
 ) {
 }

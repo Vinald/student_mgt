@@ -10,7 +10,8 @@ public class TeacherMapper {
 				teacher.getEmail(),
 				teacher.getPhone(),
 				teacher.getSpecialization(),
-				teacher.getCreatedAt()
+				teacher.getCreatedAt(),
+				teacher.getUpdatedAt()
 		);
 	}
 
